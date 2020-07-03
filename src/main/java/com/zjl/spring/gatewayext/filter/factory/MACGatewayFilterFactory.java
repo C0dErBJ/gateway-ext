@@ -13,6 +13,27 @@ import java.util.List;
 
 /**
  * @author Zhu jialiang
+ * 对报文进行验签
+ * 参考配置：
+ * spring.cloud.gateway.routes[0].filters[1]=Crypto=mode, keyMode, keyName, algorithm, param,signature,signMode
+ * <p>
+ * mode:加密方式，全文加密还是字段加密
+ * 1. content：全文加密。param和signature可以不填
+ * 2. param：字段模式。param指定被加密文本字段，signature指定签名字段
+ * <p>
+ * keyMode: 密钥的加密。none不加密，或者填写加密算法
+ * <p>
+ * keyName：密钥名称，从nacos取的
+ * <p>
+ * algorithm：请求体的加密算法
+ * <p>
+ * param：如果是字段加密，指定加密的字段名称
+ * <p>
+ * signature：签名字段
+ * <p>
+ * signMode:签名方式
+ * 1. replace:用填充字符替换，直接在当前值的位置写上填充字符串
+ * 2. remove：直接去掉签名字段
  */
 public class MACGatewayFilterFactory extends AbstractGatewayFilterFactory<MACGatewayFilterFactory.Config> {
     public static final String PREFIX_KEY = "mac";
